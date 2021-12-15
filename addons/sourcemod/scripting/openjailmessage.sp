@@ -118,11 +118,9 @@ public void Button_Pressed(const char[] output, int caller, int activator, float
 		char eventDayName[60];
 		MyJailbreak_GetEventDayName(eventDayName);
 
-		CPrintToChatAll("Prisioneiro %N", activator);
-
 		if(!MyJailbreak_IsEventDayRunning() && !g_bIsWarmup)
 		{
-			MyJailbreak_SetEventDayName("FreeDay");
+			//MyJailbreak_SetEventDayName("FreeDay");
 			CPrintToChatAll("> {default}O {red}prisioneiro %N {default}abriu as celas. É {orange}FreeDay{default}.", activator);
 		}
 	}
