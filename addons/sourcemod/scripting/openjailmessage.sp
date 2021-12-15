@@ -3,7 +3,7 @@
 #include <multicolors>
 #include <myjailbreak>
 
-#define MAX_BUTTONS 5
+#define MAX_BUTTONS 30
 
 enum struct Entities
 {
@@ -123,12 +123,12 @@ public void Button_Pressed(const char[] output, int caller, int activator, float
 		if(!MyJailbreak_IsEventDayRunning() && !g_bIsWarmup)
 		{
 			MyJailbreak_SetEventDayName("FreeDay");
-			CPrintToChatAll("{green}> {default}O {red}prisioneiro %N {green}abriu as celas{default}, por isso é {orange}FreeDay{default}.", activator);
+			CPrintToChatAll("> {default}O {red}prisioneiro %N {default}abriu as celas. É {orange}FreeDay{default}.", activator);
 		}
 	}
 	else
 	{
-		CPrintToChatAll("{green}> {default}O {darkblue}guarda %N {default}abriu as celas.", activator);
+		CPrintToChatAll("> {default}O {darkblue}guarda %N {default}abriu as celas.", activator);
 	}
 }
 
