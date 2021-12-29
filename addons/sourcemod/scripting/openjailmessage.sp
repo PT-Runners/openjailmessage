@@ -3,7 +3,7 @@
 #include <multicolors>
 #include <myjailbreak>
 
-#define MAX_BUTTONS 30
+#define MAX_BUTTONS 5
 
 enum struct Entities
 {
@@ -37,6 +37,8 @@ public void OnPluginStart()
 
 public void OnMapStart()
 {
+	g_iButtonEntitiesSize = 0;
+
 	char mapName[128];
 	GetCurrentMap(mapName, sizeof(mapName));
 
@@ -65,7 +67,7 @@ public void OnMapStart()
 
 	KvGetString(kv, "entity_id", buffer, 20);
 	g_ButtonEntities[g_iButtonEntitiesSize].entity_id = !StrEqual(buffer, "") ? StringToInt(buffer) : -1;
-	
+
 	g_iButtonEntitiesSize++;
 }
 
@@ -85,6 +87,11 @@ public void OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
 
 public void Button_Pressed(const char[] output, int caller, int activator, float delay)
 {
+	if(g_iButtonEntitiesSize == 0)
+	{
+		return;
+	}
+
 	if (!IsValidClient(activator) || !IsValidEntity(caller)) return;
 	
 	if (g_bJailAlreadyOpen) return;
@@ -120,7 +127,6 @@ public void Button_Pressed(const char[] output, int caller, int activator, float
 
 		if(!MyJailbreak_IsEventDayRunning() && !g_bIsWarmup)
 		{
-			//MyJailbreak_SetEventDayName("FreeDay");
 			CPrintToChatAll("> {default}O {red}prisioneiro %N {default}abriu as celas. É {orange}FreeDay{default}.", activator);
 		}
 	}
