@@ -1,0 +1,786 @@
+"smartjaildoors"
+{
+	"jb_summer_jail_v3"
+	{
+		"doors"
+		{
+			"cells"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_kitty_beta"
+	{
+		"doors"
+		{
+			"cely"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_mountaincraft_v6"
+	{
+		"doors"
+		{
+			"cell_door_6"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cell_door_5"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cell_door_4"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cell_door_3"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cell_door_2"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cell_door_1"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cell_door_7"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cell_door_8"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cell_door_9"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cell_door_11"
+			{
+				"class"		"func_door_rotating"
+			}
+		}
+	}
+	"ba_jail_canyondam_go"
+	{
+		"doors"
+		{
+			"CellDoors"
+			{
+				"class"		"func_movelinear"
+			}
+			"CellDoors2"
+			{
+				"class"		"func_movelinear"
+			}
+		}
+	}
+	"ba_jail_ds_desertstorm_v4"
+	{
+		"doors"
+		{
+			"celldoor1"
+			{
+				"class"		"func_door"
+			}
+			"celldoor2"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"ba_jail_dubai"
+	{
+		"doors"
+		{
+			"jail door"
+			{
+				"class"		"func_door_rotating"
+			}
+		}
+	}
+	"ba_jail_sand_final_beta2"
+	{
+		"doors"
+		{
+			"jaildoors"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_arcade_b6"
+	{
+		"doors"
+		{
+			"CellDoors"
+			{
+				"class"		"func_breakable"
+			}
+		}
+	}
+	"jb_arctic_jail_v3"
+	{
+		"doors"
+		{
+			"door_cells"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_avalanche_csgo_b8d"
+	{
+		"doors"
+		{
+			"Cell Slider"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_bignuts_alpha"
+	{
+		"doors"
+		{
+			"cells"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_blank_b4"
+	{
+		"doors"
+		{
+			"zelle00_door"
+			{
+				"class"		"func_door"
+			}
+			"zelle08_door"
+			{
+				"class"		"func_door_rotating"
+			}
+			"zelle02_door"
+			{
+				"class"		"func_door"
+			}
+			"zelle03_door"
+			{
+				"class"		"func_door"
+			}
+			"zelle04_door"
+			{
+				"class"		"func_door"
+			}
+			"zelle05_door"
+			{
+				"class"		"func_door"
+			}
+			"zelle07_door"
+			{
+				"class"		"func_door"
+			}
+			"zelle06_door"
+			{
+				"class"		"func_door"
+			}
+			"zelle01_door"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_buyukisyan_devrimfix"
+	{
+		"doors"
+		{
+			"kapi"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_castleguarddev_v5"
+	{
+		"doors"
+		{
+			"cell_door_1"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_clouds_beta02"
+	{
+		"doors"
+		{
+			"zelle_iso_door"
+			{
+				"class"		"func_door"
+			}
+			"zelle_door1"
+			{
+				"class"		"func_door"
+			}
+			"zelle_door2_garderobe"
+			{
+				"class"		"func_door"
+			}
+			"door2_3"
+			{
+				"class"		"func_door"
+			}
+			"door2_2"
+			{
+				"class"		"func_door"
+			}
+			"door2_1"
+			{
+				"class"		"func_door"
+			}
+			"door2_6"
+			{
+				"class"		"func_door"
+			}
+			"door2_5"
+			{
+				"class"		"func_door"
+			}
+			"door2_4"
+			{
+				"class"		"func_door"
+			}
+			"zelle_door2"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_fortify_v2-2"
+	{
+		"doors"
+		{
+			"celldoor"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_freekill_ptr_v2_fix"
+	{
+		"doors"
+		{
+			"celas"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_garden_v1"
+	{
+		"doors"
+		{
+			"cells"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_graffito_v3"
+	{
+		"doors"
+		{
+			"JailsMove"
+			{
+				"class"		"func_movelinear"
+			}
+		}
+	}
+	"jb_kwejsi_v5_fix"
+	{
+		"doors"
+		{
+			"cell"
+			{
+				"class"		"func_breakable"
+			}
+		}
+	}
+	"jb_lego_jail_v8"
+	{
+		"doors"
+		{
+			"c1"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_legobels_corp_v1d"
+	{
+		"doors"
+		{
+			"wt_jails"
+			{
+				"class"		"func_wall_toggle"
+			}
+			"door_jailvip"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_legoland"
+	{
+		"doors"
+		{
+			"cdoors"
+			{
+				"class"		"func_breakable"
+			}
+		}
+	}
+	"jb_mangaroons_v6_opt"
+	{
+		"doors"
+		{
+			"Cell_Doors"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_mist_v1"
+	{
+		"doors"
+		{
+			"celldoor"
+			{
+				"class"		"func_breakable"
+			}
+		}
+	}
+	"jb_moonjail_v2_hdr"
+	{
+		"doors"
+		{
+			"v1"
+			{
+				"class"		"func_movelinear"
+			}
+			"vh1"
+			{
+				"class"		"func_movelinear"
+			}
+			"vh3"
+			{
+				"class"		"func_movelinear"
+			}
+			"v3"
+			{
+				"class"		"func_movelinear"
+			}
+			"v2"
+			{
+				"class"		"func_movelinear"
+			}
+			"v4"
+			{
+				"class"		"func_movelinear"
+			}
+			"h9"
+			{
+				"class"		"func_movelinear"
+			}
+			"h8"
+			{
+				"class"		"func_movelinear"
+			}
+			"h7"
+			{
+				"class"		"func_movelinear"
+			}
+			"h6"
+			{
+				"class"		"func_movelinear"
+			}
+			"h5"
+			{
+				"class"		"func_movelinear"
+			}
+			"h4"
+			{
+				"class"		"func_movelinear"
+			}
+			"h3"
+			{
+				"class"		"func_movelinear"
+			}
+			"h2"
+			{
+				"class"		"func_movelinear"
+			}
+			"h1"
+			{
+				"class"		"func_movelinear"
+			}
+			"vh4"
+			{
+				"class"		"func_movelinear"
+			}
+			"vh2"
+			{
+				"class"		"func_movelinear"
+			}
+		}
+	}
+	"jb_paper_alive_ultime_se"
+	{
+		"doors"
+		{
+			"door_3"
+			{
+				"class"		"func_door"
+			}
+			"door_4"
+			{
+				"class"		"func_door"
+			}
+			"door_2"
+			{
+				"class"		"func_door"
+			}
+			"door_1"
+			{
+				"class"		"func_door"
+			}
+			"jail_01"
+			{
+				"class"		"func_breakable"
+			}
+		}
+		"buttons"
+		{
+			"0"
+			{
+				"Pos"		"63.376556 -90.095627 200.031250"
+			}
+		}
+	}
+	"jb_peanut_v3r"
+	{
+		"doors"
+		{
+			"celldoor"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_pyrenees_v1_2"
+	{
+		"doors"
+		{
+			"door_jail"
+			{
+				"class"		"prop_door_rotating"
+			}
+		}
+	}
+	"jb_renegade_v5"
+	{
+		"doors"
+		{
+			"cell_door"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_snow"
+	{
+		"doors"
+		{
+			"jails"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_spy_vs_spy_beta7"
+	{
+		"doors"
+		{
+			"cell_door"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_summer2020_new_version"
+	{
+		"doors"
+		{
+			"new_jail"
+			{
+				"class"		"func_breakable"
+			}
+		}
+	}
+	"jb_tundra_v1"
+	{
+		"doors"
+		{
+			"celldoorsset1"
+			{
+				"class"		"func_door"
+			}
+			"celldoorsset2"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_undertale_v1e"
+	{
+		"doors"
+		{
+			"celldoor"
+			{
+				"class"		"func_breakable"
+			}
+		}
+	}
+	"jb_vice_v1"
+	{
+		"doors"
+		{
+			"CellDoors"
+			{
+				"class"		"func_breakable"
+			}
+		}
+        "buttons"
+		{
+			"0"
+			{
+				"Pos"		"749.049194 40.682388 168.031250"
+			}
+		}
+	}
+	"jb_hogwarts_fix2"
+	{
+		"doors"
+		{
+			"jaildoor"
+			{
+				"class"		"func_brush"
+			}
+		}
+	}
+	"jb_canceris_beta3a"
+	{
+		"doors"
+		{
+			"Cell_Doors"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_dystopian_b6"
+	{
+		"doors"
+		{
+			"cells_main_door01"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cells_main_door02"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cells_main_door03"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cells_main_door04"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cells_main_door05"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cells_main_door06"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cells_main_door07"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cells_main_door08"
+			{
+				"class"		"func_door_rotating"
+			}
+			"cells_main_door09"
+			{
+				"class"		"func_door_rotating"
+			}
+		}
+	}
+	"jb_elwrci"
+	{
+		"doors"
+		{
+			"kapi"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_america_mp"
+	{
+		"doors"
+		{
+			"celldoor"
+			{
+				"class"		"func_breakable"
+			}
+		}
+	}
+	"jb_dust2_v50"
+	{
+		"doors"
+		{
+			"cell_func_door"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_mist_v_1"
+	{
+		"doors"
+		{
+			"celldoor"
+			{
+				"class"		"func_breakable"
+			}
+		}
+	}
+	"ba_jail_MinecraftParty_v8"
+	{
+		"doors"
+		{
+			"door_jails"
+			{
+				"class"		"func_door_rotating"
+			}
+		}
+	}
+	"jb_augment_v2"
+	{
+		"doors"
+		{
+			"jail_doors"
+			{
+				"class"		"func_door"
+			}
+			"solitary_door"
+			{
+				"class"		"func_door"
+			}
+		}
+		"buttons"
+		{
+			"0"
+			{
+				"Pos"		"1560.971313 1273.349731 272.031250"
+			}
+		}
+	}
+	"jb_autumn_v2"
+	{
+		"doors"
+		{
+			"CellDoors"
+			{
+				"class"		"func_breakable"
+			}
+			"isolation_door"
+			{
+				"class"		"prop_door_rotating"
+			}
+		}
+	}
+	"jb_chicken_island"
+	{
+		"doors"
+		{
+			"jail_doors"
+			{
+				"class"		"prop_door_rotating"
+			}
+			"iso_door"
+			{
+				"class"		"prop_door_rotating"
+			}
+		}
+	}
+	"jb_marioworld_rsc_fix"
+	{
+		"doors"
+		{
+			"jaildoor"
+			{
+				"class"		"func_door"
+			}
+			"isodoor"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_obama_v5_beta"
+	{
+		"doors"
+		{
+			"Cell_Doors"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_putin_v2"
+	{
+		"doors"
+		{
+			"zellentuerenoben"
+			{
+				"class"		"func_door"
+			}
+			"gummizellentuer"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_sandypicnic_final3_beta"
+	{
+		"doors"
+		{
+			"celldoor"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+}
