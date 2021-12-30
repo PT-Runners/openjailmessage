@@ -1,9 +1,13 @@
 #include <sdktools>
+#include <sdkhooks>
 #include <sourcemod>
 #include <multicolors>
 #include <myjailbreak>
+#include <smartjaildoors>
+#include <openjailmessage>
 
 #define MAX_BUTTONS 5
+//#define DEBUG
 
 enum struct Entities
 {
@@ -15,7 +19,12 @@ Entities g_ButtonEntities[MAX_BUTTONS];
 int g_iButtonEntitiesSize = 0;
 
 bool g_bJailAlreadyOpen;
-bool g_bIsWarmup;
+
+int g_iClientOpened = -1;
+
+char g_sFilePath[PLATFORM_MAX_PATH];
+
+Handle g_hOnOpen  = null;
 
 public Plugin myinfo =
 {
@@ -26,14 +35,30 @@ public Plugin myinfo =
 	url = "TheWalkingJail https://discord.gg/Q7b57yk"
 };
 
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+    g_hOnOpen = CreateGlobalForward("OJM_OnJailOpened", ET_Event, Param_Cell, Param_Array);
+    
+    CreateNative("OJM_IsJailAlreadyOpen", Native_IsJailAlreadyOpen);
+    CreateNative("OJM_GetClientJailOpen", Native_GetClientJailOpen);
+    
+    RegPluginLibrary("openjailmessage");
+    
+    return APLRes_Success;
+}
+
 public void OnPluginStart()
 {
 	HookEntityOutput("func_button", "OnPressed", Button_Pressed);
 
-	HookEvent("round_start", OnRoundStart);
+	HookEvent("round_prestart", OnRoundPreStart);
+
+	BuildPath(Path_SM, g_sFilePath, sizeof(g_sFilePath), "logs/openjailmessage.txt");
 
 	g_bJailAlreadyOpen = false;
+	g_iClientOpened = -1;
 }
+
 
 public void OnMapStart()
 {
@@ -68,67 +93,126 @@ public void OnMapStart()
 	KvGetString(kv, "entity_id", buffer, 20);
 	g_ButtonEntities[g_iButtonEntitiesSize].entity_id = !StrEqual(buffer, "") ? StringToInt(buffer) : -1;
 
+	#if defined DEBUG
+	LogToFileEx(g_sFilePath, "Entity Name: %s | Entity ID: %i", g_ButtonEntities[g_iButtonEntitiesSize].entity_name, g_ButtonEntities[g_iButtonEntitiesSize].entity_id);
+	#endif
+
 	g_iButtonEntitiesSize++;
 }
 
-public void OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
+public void OnRoundPreStart(Handle event, const char[] name, bool dontBroadcast)
 {
-	g_bJailAlreadyOpen = false;
-
+	g_iClientOpened = -1;
 	if (GameRules_GetProp("m_bWarmupPeriod") == 0)
 	{
-		g_bIsWarmup = false;
+		g_bJailAlreadyOpen = false;
 	}
 	else
 	{
-		g_bIsWarmup = true;
+		g_bJailAlreadyOpen = true; //warmup
 	}
+}
+
+public void MyJailbreak_OnEventDayStart(char[] EventDayName)
+{
+	g_bJailAlreadyOpen = true;
+	g_iClientOpened = -1;
 }
 
 public void Button_Pressed(const char[] output, int caller, int activator, float delay)
 {
-	if(g_iButtonEntitiesSize == 0)
+	if(g_iButtonEntitiesSize == 0) return;
+
+	if (!IsValidClient(activator) || !IsValidEntity(caller)) return;
+
+	if (g_bJailAlreadyOpen) return;
+
+	char entityName[100];
+	GetEntPropString(caller, Prop_Data, "m_iName", entityName, sizeof(entityName));
+	
+	#if defined DEBUG
+
+	char entityClassName[50];
+	GetEdictClassname(caller, entityClassName, sizeof(entityClassName));
+	LogToFileEx(g_sFilePath, "Ingame Entity Name: %s | Entity ID: %i | Entity Classname: %s", entityName, caller, entityClassName);
+
+	#endif
+
+	bool validButton = CheckButtonValidByConfig(caller, entityName);
+	
+	if(!validButton) return;
+
+	Action res = Plugin_Continue;
+	Call_StartForward(g_hOnOpen);
+	Call_PushCell(activator);
+	Call_Finish(res);
+
+	if (res == Plugin_Handled || res == Plugin_Stop)
 	{
 		return;
 	}
 
-	if (!IsValidClient(activator) || !IsValidEntity(caller)) return;
+	g_iClientOpened = activator;
+
+	g_bJailAlreadyOpen = true;
+	
+	ShowMessageToClients(activator);
+}
+
+public void SJD_ButtonPressed(int activator)
+{
+	if (!IsValidClient(activator)) return;
 	
 	if (g_bJailAlreadyOpen) return;
-	
-	char entity[512];
-	GetEntPropString(caller, Prop_Data, "m_iName", entity, sizeof(entity));
 
-	bool validButton = false;
+	Action res = Plugin_Continue;
+	Call_StartForward(g_hOnOpen);
+	Call_PushCell(activator);
+	Call_Finish(res);
+
+	if (res == Plugin_Handled || res == Plugin_Stop)
+	{
+		return;
+	}
+
+	g_iClientOpened = activator;
+
+	g_bJailAlreadyOpen = true;
 	
+	ShowMessageToClients(activator);
+}
+
+public int Native_IsJailAlreadyOpen(Handle plugin, int numParams)
+{
+	return view_as<int>(g_bJailAlreadyOpen);
+}
+
+public int Native_GetClientJailOpen(Handle plugin, int numParams)
+{
+    return g_iClientOpened;
+}
+
+bool CheckButtonValidByConfig(int caller, const char[] entityName)
+{
 	for(int i = 0; i < g_iButtonEntitiesSize; i++)
 	{
 		if(
 			(g_ButtonEntities[i].entity_id != -1 && caller == g_ButtonEntities[i].entity_id) ||
-			(!StrEqual(g_ButtonEntities[i].entity_name, "") && StrEqual(g_ButtonEntities[i].entity_name, entity))
+			(!StrEqual(g_ButtonEntities[i].entity_name, "") && StrEqual(g_ButtonEntities[i].entity_name, entityName))
 		)
 		{
-			validButton = true;
-			break;
+			return true;
 		}
 	}
-	
-	if(!validButton)
-	{
-		return;
-	}
 
-	g_bJailAlreadyOpen = true;
-	
+	return false;
+}
+
+void ShowMessageToClients(activator)
+{
 	if (GetClientTeam(activator) == 2)
 	{
-		char eventDayName[60];
-		MyJailbreak_GetEventDayName(eventDayName);
-
-		if(!MyJailbreak_IsEventDayRunning() && !g_bIsWarmup)
-		{
-			CPrintToChatAll("> {default}O {red}prisioneiro %N {default}abriu as celas. É {orange}FreeDay{default}.", activator);
-		}
+		CPrintToChatAll("> {default}O {red}prisioneiro %N {default}abriu as celas. É {orange}FreeDay{default}.", activator);
 	}
 	else
 	{
@@ -136,7 +220,7 @@ public void Button_Pressed(const char[] output, int caller, int activator, float
 	}
 }
 
-public bool IsValidClient( int client ) 
+stock bool IsValidClient(int client) 
 { 
     if ( !( 1 <= client <= MaxClients ) || !IsClientInGame(client) || !IsPlayerAlive(client) ) 
         return false; 
