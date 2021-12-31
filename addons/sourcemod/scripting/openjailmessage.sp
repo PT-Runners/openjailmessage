@@ -5,6 +5,7 @@
 #include <myjailbreak>
 #include <smartjaildoors>
 #include <openjailmessage>
+#include <emitsoundany>
 
 #define MAX_BUTTONS 5
 //#define DEBUG
@@ -63,6 +64,13 @@ public void OnPluginStart()
 public void OnMapStart()
 {
 	g_iButtonEntitiesSize = 0;
+
+	AddFileToDownloadsTable("sound/ptrunners/openjail/freeday.mp3");
+	AddFileToDownloadsTable("sound/ptrunners/openjail/freeday2.mp3");
+//	AddFileToDownloadsTable("sound/ptrunners/openjail/opencells.mp3");
+	PrecacheSoundAny("ptrunners/openjail/freeday.mp3");
+	PrecacheSoundAny("ptrunners/openjail/freeday2.mp3");
+//	PrecacheSoundAny("ptrunners/openjail/opencells.mp3");
 
 	char mapName[128];
 	GetCurrentMap(mapName, sizeof(mapName));
@@ -212,11 +220,21 @@ void ShowMessageToClients(activator)
 {
 	if (GetClientTeam(activator) == 2)
 	{
-		CPrintToChatAll("> {default}O {red}prisioneiro %N {default}abriu as celas. É {orange}FreeDay{default}.", activator);
+		CPrintToChatAll("> {default}O prisioneiro {darkred}%N {default}abriu as celas. É {orange}FreeDay{default}.", activator);
+
+		new randomint = GetRandomInt(1, 2);
+		if (randomint == 1)
+		{
+			EmitSoundToAllAny("ptrunners/openjail/freeday.mp3");
+		}
+		if (randomint == 2)
+		{
+			EmitSoundToAllAny("ptrunners/openjail/freeday2.mp3");
+		}
 	}
 	else
 	{
-		CPrintToChatAll("> {default}O {darkblue}guarda %N {default}abriu as celas.", activator);
+		CPrintToChatAll("> {default}O guarda {darkblue}%N {default}abriu as celas.", activator);
 	}
 }
 
