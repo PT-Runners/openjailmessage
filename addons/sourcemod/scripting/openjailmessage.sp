@@ -8,6 +8,7 @@
 #include <emitsoundany>
 
 #define MAX_BUTTONS 5
+#define MAX_SOUNDS 10
 //#define DEBUG
 
 enum struct Entities
@@ -24,6 +25,11 @@ bool g_bJailAlreadyOpen;
 int g_iClientOpened = -1;
 
 char g_sFilePath[PLATFORM_MAX_PATH];
+char g_sPathConfig[PLATFORM_MAX_PATH];
+char g_sPathSound[PLATFORM_MAX_PATH];
+
+char g_SoundsFilePath[MAX_SOUNDS][PLATFORM_MAX_PATH];
+int g_iSoundsFilePathSize = 0;
 
 Handle g_hOnOpen  = null;
 
@@ -60,52 +66,13 @@ public void OnPluginStart()
 	g_iClientOpened = -1;
 }
 
-
 public void OnMapStart()
 {
-	g_iButtonEntitiesSize = 0;
+	BuildPath(Path_SM, g_sPathSound, sizeof(g_sPathSound), "configs/openjailmessage_sounds.cfg");
+	ReadSounds();
 
-	AddFileToDownloadsTable("sound/ptrunners/openjail/freeday.mp3");
-	AddFileToDownloadsTable("sound/ptrunners/openjail/freeday2.mp3");
-//	AddFileToDownloadsTable("sound/ptrunners/openjail/opencells.mp3");
-	PrecacheSoundAny("ptrunners/openjail/freeday.mp3");
-	PrecacheSoundAny("ptrunners/openjail/freeday2.mp3");
-//	PrecacheSoundAny("ptrunners/openjail/opencells.mp3");
-
-	char mapName[128];
-	GetCurrentMap(mapName, sizeof(mapName));
-
-	char file[256];
-	BuildPath(Path_SM, file, sizeof(file), "configs/openjailmessage.cfg");
-
-	Handle kv = CreateKeyValues("OpenJailMessage");
-	FileToKeyValues(kv, file);
-
-	if(!KvGotoFirstSubKey(kv))
-	{
-		return;
-	}
-
-	KvRewind(kv);
-
-	if(!KvJumpToKey(kv, mapName))
-	{
-		return;
-	}
-
-	char buffer[255];
-
-	KvGetString(kv, "entity_name", buffer, 100);
-	strcopy(g_ButtonEntities[g_iButtonEntitiesSize].entity_name, 100, buffer);
-
-	KvGetString(kv, "entity_id", buffer, 20);
-	g_ButtonEntities[g_iButtonEntitiesSize].entity_id = !StrEqual(buffer, "") ? StringToInt(buffer) : -1;
-
-	#if defined DEBUG
-	LogToFileEx(g_sFilePath, "Entity Name: %s | Entity ID: %i", g_ButtonEntities[g_iButtonEntitiesSize].entity_name, g_ButtonEntities[g_iButtonEntitiesSize].entity_id);
-	#endif
-
-	g_iButtonEntitiesSize++;
+	BuildPath(Path_SM, g_sPathConfig, sizeof(g_sPathConfig), "configs/openjailmessage.cfg");
+	ReadConfig();
 }
 
 public void OnRoundPreStart(Handle event, const char[] name, bool dontBroadcast)
@@ -200,6 +167,85 @@ public int Native_GetClientJailOpen(Handle plugin, int numParams)
     return g_iClientOpened;
 }
 
+void ReadSounds() {
+	
+	char buffer[PLATFORM_MAX_PATH];
+	char download[PLATFORM_MAX_PATH];
+	Handle kv;
+
+	g_iSoundsFilePathSize = 0;
+
+	kv = CreateKeyValues("OpenJailMessageSounds");
+	FileToKeyValues(kv, g_sPathSound);
+
+	if (!KvGotoFirstSubKey(kv)) {
+
+		SetFailState("CFG File not found: %s", g_sPathSound);
+		CloseHandle(kv);
+	}
+	do {
+
+		//KvGetSectionName(kv, buffer, sizeof(buffer));
+		KvGetString(kv, "path", buffer, sizeof(buffer));
+		
+		PrecacheSoundAny(buffer);
+
+		Format(download, sizeof(download), "sound/%s", buffer);
+		AddFileToDownloadsTable(download);
+
+		Format(g_SoundsFilePath[g_iSoundsFilePathSize], PLATFORM_MAX_PATH, "%s", buffer);
+		
+		g_iSoundsFilePathSize++;
+
+	} while (KvGotoNextKey(kv));
+
+	CloseHandle(kv);
+}
+
+void ReadConfig()
+{
+	g_iButtonEntitiesSize = 0;
+
+	char mapName[128];
+	GetCurrentMap(mapName, sizeof(mapName));
+
+	Handle kv = CreateKeyValues("OpenJailMessage");
+	FileToKeyValues(kv, g_sPathConfig);
+
+	if(!KvGotoFirstSubKey(kv))
+	{
+		return;
+	}
+
+	KvRewind(kv);
+
+	if(!KvJumpToKey(kv, mapName))
+	{
+		return;
+	}
+
+	char buffer[255];
+
+	KvGetString(kv, "entity_name", buffer, 100);
+	strcopy(g_ButtonEntities[g_iButtonEntitiesSize].entity_name, 100, buffer);
+
+	KvGetString(kv, "entity_id", buffer, 20);
+	g_ButtonEntities[g_iButtonEntitiesSize].entity_id = !StrEqual(buffer, "") ? StringToInt(buffer) : -1;
+
+	#if defined DEBUG
+	LogToFileEx(g_sFilePath, "Entity Name: %s | Entity ID: %i", g_ButtonEntities[g_iButtonEntitiesSize].entity_name, g_ButtonEntities[g_iButtonEntitiesSize].entity_id);
+	#endif
+
+	g_iButtonEntitiesSize++;
+}
+
+void GetRandomSound(char[] soundPath, int soundLength)
+{
+	int randomSound = GetRandomInt(0, g_iSoundsFilePathSize-1);
+
+	strcopy(soundPath, soundLength, g_SoundsFilePath[randomSound]);
+}
+
 bool CheckButtonValidByConfig(int caller, const char[] entityName)
 {
 	for(int i = 0; i < g_iButtonEntitiesSize; i++)
@@ -222,15 +268,9 @@ void ShowMessageToClients(activator)
 	{
 		CPrintToChatAll("> {default}O prisioneiro {darkred}%N {default}abriu as celas. É {orange}FreeDay{default}.", activator);
 
-		new randomint = GetRandomInt(1, 2);
-		if (randomint == 1)
-		{
-			EmitSoundToAllAny("ptrunners/openjail/freeday.mp3");
-		}
-		if (randomint == 2)
-		{
-			EmitSoundToAllAny("ptrunners/openjail/freeday2.mp3");
-		}
+		char randomSound[PLATFORM_MAX_PATH];
+		GetRandomSound(randomSound, sizeof(randomSound));
+		EmitSoundToAllAny(randomSound);
 	}
 	else
 	{
