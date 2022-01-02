@@ -14,7 +14,7 @@
 enum struct Entities
 {
 	char entity_name[100];
-	int entity_id;
+	int entity_hammerid;
 }
 
 Entities g_ButtonEntities[MAX_BUTTONS];
@@ -185,7 +185,6 @@ void ReadSounds() {
 	}
 	do {
 
-		//KvGetSectionName(kv, buffer, sizeof(buffer));
 		KvGetString(kv, "path", buffer, sizeof(buffer));
 		
 		PrecacheSoundAny(buffer);
@@ -229,11 +228,11 @@ void ReadConfig()
 	KvGetString(kv, "entity_name", buffer, 100);
 	strcopy(g_ButtonEntities[g_iButtonEntitiesSize].entity_name, 100, buffer);
 
-	KvGetString(kv, "entity_id", buffer, 20);
-	g_ButtonEntities[g_iButtonEntitiesSize].entity_id = !StrEqual(buffer, "") ? StringToInt(buffer) : -1;
+	KvGetString(kv, "entity_hammerid", buffer, 20);
+	g_ButtonEntities[g_iButtonEntitiesSize].entity_hammerid = !StrEqual(buffer, "") ? StringToInt(buffer) : -1;
 
 	#if defined DEBUG
-	LogToFileEx(g_sFilePath, "Entity Name: %s | Entity ID: %i", g_ButtonEntities[g_iButtonEntitiesSize].entity_name, g_ButtonEntities[g_iButtonEntitiesSize].entity_id);
+	LogToFileEx(g_sFilePath, "Entity Name: %s | Entity HammerID: %i", g_ButtonEntities[g_iButtonEntitiesSize].entity_name, g_ButtonEntities[g_iButtonEntitiesSize].entity_hammerid);
 	#endif
 
 	g_iButtonEntitiesSize++;
@@ -248,10 +247,12 @@ void GetRandomSound(char[] soundPath, int soundLength)
 
 bool CheckButtonValidByConfig(int caller, const char[] entityName)
 {
+	int hammerId = GetEntProp(caller, Prop_Data, "m_iHammerID");
+
 	for(int i = 0; i < g_iButtonEntitiesSize; i++)
 	{
 		if(
-			(g_ButtonEntities[i].entity_id != -1 && caller == g_ButtonEntities[i].entity_id) ||
+			(g_ButtonEntities[i].entity_hammerid != -1 && hammerId == g_ButtonEntities[i].entity_hammerid) ||
 			(!StrEqual(g_ButtonEntities[i].entity_name, "") && StrEqual(g_ButtonEntities[i].entity_name, entityName))
 		)
 		{
