@@ -271,7 +271,7 @@ void ShowMessageToClients(activator)
 
 		char randomSound[PLATFORM_MAX_PATH];
 		GetRandomSound(randomSound, sizeof(randomSound));
-		EmitSoundToAllAny(randomSound);
+		EmitSoundToAllAny(randomSound, _, SNDCHAN_VOICE);
 	}
 	else
 	{
