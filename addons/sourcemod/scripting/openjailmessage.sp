@@ -1,6 +1,7 @@
+#include <sourcemod>
 #include <sdktools>
 #include <sdkhooks>
-#include <sourcemod>
+#include <cstrike>
 #include <multicolors>
 #include <myjailbreak>
 #include <smartjaildoors>
@@ -28,8 +29,14 @@ char g_sFilePath[PLATFORM_MAX_PATH];
 char g_sPathConfig[PLATFORM_MAX_PATH];
 char g_sPathSound[PLATFORM_MAX_PATH];
 
-char g_SoundsFilePath[MAX_SOUNDS][PLATFORM_MAX_PATH];
-int g_iSoundsFilePathSize = 0;
+enum struct Sound
+{
+	char path[PLATFORM_MAX_PATH];
+	int team;
+}
+
+Sound g_Sounds[MAX_SOUNDS];
+int g_iSoundsSize = 0;
 
 Handle g_hOnOpen  = null;
 
@@ -173,7 +180,7 @@ void ReadSounds() {
 	char download[PLATFORM_MAX_PATH];
 	Handle kv;
 
-	g_iSoundsFilePathSize = 0;
+	g_iSoundsSize = 0;
 
 	kv = CreateKeyValues("OpenJailMessageSounds");
 	FileToKeyValues(kv, g_sPathSound);
@@ -192,9 +199,11 @@ void ReadSounds() {
 		Format(download, sizeof(download), "sound/%s", buffer);
 		AddFileToDownloadsTable(download);
 
-		Format(g_SoundsFilePath[g_iSoundsFilePathSize], PLATFORM_MAX_PATH, "%s", buffer);
+		Format(g_Sounds[g_iSoundsSize].path, PLATFORM_MAX_PATH, "%s", buffer);
+
+		g_Sounds[g_iSoundsSize].team = KvGetNum(kv, "team", 0);
 		
-		g_iSoundsFilePathSize++;
+		g_iSoundsSize++;
 
 	} while (KvGotoNextKey(kv));
 
@@ -238,11 +247,19 @@ void ReadConfig()
 	g_iButtonEntitiesSize++;
 }
 
-void GetRandomSound(char[] soundPath, int soundLength)
+void GetRandomSound(char[] soundPath, int soundLength, int team)
 {
-	int randomSound = GetRandomInt(0, g_iSoundsFilePathSize-1);
+	int maxtries = 5;
 
-	strcopy(soundPath, soundLength, g_SoundsFilePath[randomSound]);
+	for(int i = 0; i < maxtries; i++) {
+
+		int randomSound = GetRandomInt(0, g_iSoundsSize-1);
+		if(g_Sounds[randomSound].team == team || g_Sounds[randomSound].team == 0) {
+			strcopy(soundPath, soundLength, g_Sounds[randomSound].path);
+			break;
+		}
+
+	}
 }
 
 bool CheckButtonValidByConfig(int caller, const char[] entityName)
@@ -265,18 +282,27 @@ bool CheckButtonValidByConfig(int caller, const char[] entityName)
 
 void ShowMessageToClients(activator)
 {
-	if (GetClientTeam(activator) == 2)
-	{
-		CPrintToChatAll("> {default}O prisioneiro {darkred}%N {default}abriu as celas. É {orange}FreeDay{default}.", activator);
+	int team = GetClientTeam(activator);
 
-		char randomSound[PLATFORM_MAX_PATH];
-		GetRandomSound(randomSound, sizeof(randomSound));
-		EmitSoundToAllAny(randomSound);
-	}
-	else
+	if(team != CS_TEAM_T && team != CS_TEAM_CT)
+		return;
+
+	switch(team)
 	{
-		CPrintToChatAll("> {default}O guarda {darkblue}%N {default}abriu as celas.", activator);
+		case CS_TEAM_T:
+		{
+			CPrintToChatAll("> {default}O prisioneiro {darkred}%N {default}abriu as celas. É {orange}FreeDay{default}.", activator);
+		}
+
+		case CS_TEAM_CT:
+		{
+			CPrintToChatAll("> {default}O guarda {darkblue}%N {default}abriu as celas.", activator);
+		}
 	}
+
+	char randomSound[PLATFORM_MAX_PATH];
+	GetRandomSound(randomSound, sizeof(randomSound), team);
+	EmitSoundToAllAny(randomSound);
 }
 
 stock bool IsValidClient(int client) 
