@@ -302,7 +302,7 @@ void ShowMessageToClients(activator)
 
 	char randomSound[PLATFORM_MAX_PATH];
 	GetRandomSound(randomSound, sizeof(randomSound), team);
-	EmitSoundToAllAny(randomSound);
+	EmitSoundToAllAny(randomSound, _, SNDCHAN_VOICE);
 }
 
 stock bool IsValidClient(int client) 
