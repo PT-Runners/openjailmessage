@@ -501,6 +501,10 @@
 			{
 				"class"		"func_door"
 			}
+			"cell_doors10"
+			{
+				"class"		"func_door"
+			}
 		}
 	}
 	"jb_snow"
@@ -566,11 +570,11 @@
 				"class"		"func_breakable"
 			}
 		}
-        "buttons"
+		"buttons"
 		{
 			"0"
 			{
-				"Pos"		"749.049194 40.682388 168.031250"
+				"Pos"		"752.232605 22.992531 168.031250"
 			}
 		}
 	}
@@ -703,7 +707,7 @@
 		{
 			"0"
 			{
-				"Pos"		"1560.971313 1273.349731 272.031250"
+				"Pos"		"1563.222900 1274.863281 272.031250"
 			}
 		}
 	}
@@ -771,6 +775,10 @@
 			{
 				"class"		"func_door"
 			}
+			"zellentuerenunten"
+			{
+				"class"		"func_door"
+			}
 		}
 	}
 	"jb_sandypicnic_final3_beta"
@@ -778,6 +786,614 @@
 		"doors"
 		{
 			"celldoor"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_lego_jail_2k17b"
+	{
+		"doors"
+		{
+			"c1"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"ba_jail_inhole"
+	{
+		"doors"
+		{
+			"door16"
+			{
+				"class"		"func_door"
+			}
+			"door15"
+			{
+				"class"		"func_door"
+			}
+			"door14"
+			{
+				"class"		"func_door"
+			}
+			"door13"
+			{
+				"class"		"func_door"
+			}
+			"door12"
+			{
+				"class"		"func_door"
+			}
+			"door11"
+			{
+				"class"		"func_door"
+			}
+			"door10"
+			{
+				"class"		"func_door"
+			}
+			"door8"
+			{
+				"class"		"func_door"
+			}
+			"door7"
+			{
+				"class"		"func_door"
+			}
+			"door6"
+			{
+				"class"		"func_door"
+			}
+			"door5"
+			{
+				"class"		"func_door"
+			}
+			"door4"
+			{
+				"class"		"func_door"
+			}
+			"door3"
+			{
+				"class"		"func_door"
+			}
+			"door2"
+			{
+				"class"		"func_door"
+			}
+			"door1"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"ba_dreamjail_watchtower_v2-1"
+	{
+		"doors"
+		{
+			"jaildoor"
+			{
+				"class"		"func_door"
+			}
+			"isodoor"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_2017_minecraft_ptr"
+	{
+		"doors"
+		{
+			"Obsidian"
+			{
+				"class"		"func_breakable"
+			}
+		}
+	}
+	"jb_hostile2_default"
+	{
+		"doors"
+		{
+			"celldoor"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_placzabaw_minecraft"
+	{
+		"doors"
+		{
+			"cele"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_freekill_ptr_v3"
+	{
+		"doors"
+		{
+			"celas"
+			{
+				"class"		"func_door"
+			}
+			"solitaria"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_freekill_ptr_v3_fix"
+	{
+		"doors"
+		{
+			"celas"
+			{
+				"class"		"func_door"
+			}
+			"solitaria"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_freekill_ptr_v4"
+	{
+		"doors"
+		{
+			"celas"
+			{
+				"class"		"func_door"
+			}
+			"solitaria"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_nm_kistroll_b1b"
+	{
+		"doors"
+		{
+			"cela5"
+			{
+				"class"		"func_door"
+			}
+			"cela9"
+			{
+				"class"		"func_door"
+			}
+			"cela10"
+			{
+				"class"		"func_door"
+			}
+			"cela11"
+			{
+				"class"		"func_door"
+			}
+			"cela12"
+			{
+				"class"		"func_door"
+			}
+			"cela13"
+			{
+				"class"		"func_door"
+			}
+			"cela14"
+			{
+				"class"		"func_door"
+			}
+			"cela15"
+			{
+				"class"		"func_door"
+			}
+			"cela16"
+			{
+				"class"		"func_door"
+			}
+			"cela8"
+			{
+				"class"		"func_door"
+			}
+			"cela7"
+			{
+				"class"		"func_door"
+			}
+			"cela6"
+			{
+				"class"		"func_door"
+			}
+			"cela4"
+			{
+				"class"		"func_door"
+			}
+			"cela3"
+			{
+				"class"		"func_door"
+			}
+			"cela2"
+			{
+				"class"		"func_door"
+			}
+			"cela1"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_valley"
+	{
+		"doors"
+		{
+			"cells"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"ba_arizona_2"
+	{
+		"doors"
+		{
+			"celldoor"
+			{
+				"class"		"func_door"
+			}
+			"solitarydoor"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_battleforce_jail_csgo"
+	{
+		"doors"
+		{
+			"cely door"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_snow_hex_v1"
+	{
+		"doors"
+		{
+			"jails"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_fentex_fix_hdr"
+	{
+		"doors"
+		{
+			"jail_door_7"
+			{
+				"class"		"func_door_rotating"
+			}
+			"jail_door_1"
+			{
+				"class"		"func_door_rotating"
+			}
+			"jail_door_2"
+			{
+				"class"		"func_door_rotating"
+			}
+			"jail_door_3"
+			{
+				"class"		"func_door_rotating"
+			}
+			"jail_door_6"
+			{
+				"class"		"func_door_rotating"
+			}
+			"jail_door_8"
+			{
+				"class"		"func_door_rotating"
+			}
+			"jail_door_9"
+			{
+				"class"		"func_door_rotating"
+			}
+			"jail_door_5"
+			{
+				"class"		"func_door_rotating"
+			}
+			"jail_door_4"
+			{
+				"class"		"func_door_rotating"
+			}
+			"iso_door_3"
+			{
+				"class"		"func_door"
+			}
+			"iso_door_2"
+			{
+				"class"		"func_door"
+			}
+			"iso_door_1"
+			{
+				"class"		"func_door"
+			}
+			"iso_door_16"
+			{
+				"class"		"func_door"
+			}
+			"iso_door_15"
+			{
+				"class"		"func_door"
+			}
+			"iso_door_14"
+			{
+				"class"		"func_door"
+			}
+			"iso_door_13"
+			{
+				"class"		"func_door"
+			}
+			"iso_door_12"
+			{
+				"class"		"func_door"
+			}
+			"iso_door_11"
+			{
+				"class"		"func_door"
+			}
+			"iso_door_10"
+			{
+				"class"		"func_door"
+			}
+			"iso_door_9"
+			{
+				"class"		"func_door"
+			}
+			"iso_door_8"
+			{
+				"class"		"func_door"
+			}
+			"iso_door_7"
+			{
+				"class"		"func_door"
+			}
+			"iso_door_6"
+			{
+				"class"		"func_door"
+			}
+			"iso_door_5"
+			{
+				"class"		"func_door"
+			}
+			"iso_door_4"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_overcooked"
+	{
+		"doors"
+		{
+			"cell_door"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_playorrebel"
+	{
+		"doors"
+		{
+			"cell_door"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_synergy_v3g"
+	{
+		"doors"
+		{
+			"CellB_door_break"
+			{
+				"class"		"func_breakable"
+			}
+			"cellA_door"
+			{
+				"class"		"func_door"
+			}
+			"cellA_door1"
+			{
+				"class"		"func_door"
+			}
+			"cellA_door2"
+			{
+				"class"		"func_door"
+			}
+			"cellA_door3"
+			{
+				"class"		"func_door"
+			}
+			"cellA_door4"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_tropico_v2"
+	{
+		"doors"
+		{
+			"cell_door"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_brixx_v1"
+	{
+		"doors"
+		{
+			"Zelle1R"
+			{
+				"class"		"func_door"
+			}
+			"Zelle1L"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_jailberd_v5_final_fix"
+	{
+		"doors"
+		{
+			"celldoor"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_coldcampus_b1r"
+	{
+		"doors"
+		{
+			"celldoor"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_corruption_v3o"
+	{
+		"doors"
+		{
+			"CellDoors"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_glow_b1"
+	{
+		"doors"
+		{
+			"cell_path_1"
+			{
+				"class"		"func_movelinear"
+			}
+			"cell_brush_1"
+			{
+				"class"		"func_brush"
+			}
+		}
+	}
+	"jb_water_prison_go_v3n"
+	{
+		"doors"
+		{
+			"cells"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"ba_jail_stronghold"
+	{
+		"doors"
+		{
+			"celldoor"
+			{
+				"class"		"func_door_rotating"
+			}
+		}
+	}
+	"jb_arctic_summer"
+	{
+		"doors"
+		{
+			"MCellArea_Celldoorbrush"
+			{
+				"class"		"func_door"
+			}
+			"MCellArea_Celldoorbrush4"
+			{
+				"class"		"func_door"
+			}
+			"MCellArea_Celldoorbrush5"
+			{
+				"class"		"func_door"
+			}
+			"MCellArea_Celldoorbrush3"
+			{
+				"class"		"func_door"
+			}
+			"MCellArea_Celldoorbrush2"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_cubeworld_b3"
+	{
+		"doors"
+		{
+			"cell_door"
+			{
+				"class"		"func_breakable"
+			}
+		}
+	}
+	"jb_industry"
+	{
+		"doors"
+		{
+			"MCellArea_Celldoorbrush"
+			{
+				"class"		"func_door"
+			}
+			"MCellArea_Celldoorbrush2"
+			{
+				"class"		"func_door"
+			}
+		}
+	}
+	"jb_cavern_v1b"
+	{
+		"doors"
+		{
+			"Jail Door 5"
+			{
+				"class"		"func_door"
+			}
+			"Jail Door 1"
+			{
+				"class"		"func_door"
+			}
+			"Jail Door 2"
+			{
+				"class"		"func_door"
+			}
+			"Jail Door 3"
+			{
+				"class"		"func_door"
+			}
+			"Jail Door 4"
+			{
+				"class"		"func_door"
+			}
+			"Jail Door 8"
+			{
+				"class"		"func_door"
+			}
+			"Jail Door 7"
+			{
+				"class"		"func_door"
+			}
+			"Jail Door 6"
 			{
 				"class"		"func_door"
 			}
