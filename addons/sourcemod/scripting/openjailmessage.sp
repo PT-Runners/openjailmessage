@@ -67,6 +67,8 @@ public void OnPluginStart()
 
 	HookEvent("round_prestart", OnRoundPreStart);
 
+	LoadTranslations("openjailmessage.phrases");
+
 	BuildPath(Path_SM, g_sFilePath, sizeof(g_sFilePath), "logs/openjailmessage.txt");
 
 	g_bJailAlreadyOpen = false;
@@ -291,14 +293,17 @@ void ShowMessageToClients(activator)
 	{
 		case CS_TEAM_T:
 		{
-			CPrintToChatAll("> {default}O prisioneiro {darkred}%N {default}abriu as celas. É {orange}FreeDay{default}.", activator);
+			CPrintToChatAll("%t", "Prisoner opened cells", activator);
 		}
 
 		case CS_TEAM_CT:
 		{
-			CPrintToChatAll("> {default}O guarda {darkblue}%N {default}abriu as celas.", activator);
+			CPrintToChatAll("%t", "Guard opened cells", activator);
 		}
 	}
+
+	if(!g_iSoundsSize)
+		return;
 
 	char randomSound[PLATFORM_MAX_PATH];
 	GetRandomSound(randomSound, sizeof(randomSound), team);

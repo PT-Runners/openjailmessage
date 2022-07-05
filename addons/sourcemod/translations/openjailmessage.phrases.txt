@@ -1,0 +1,14 @@
+"Phrases"
+{
+    "Prisoner opened cells"
+    {
+        "#format"	"{1:N}"
+		"en"		"> {default}O prisioneiro {darkred}{1} {default}abriu as celas. É {orange}FreeDay{default}."
+    }
+
+    "Guard opened cells"
+    {
+        "#format"	"{1:N}"
+		"en"		"> {default}O guarda {darkblue}{1} {default}abriu as celas."
+    }
+}
