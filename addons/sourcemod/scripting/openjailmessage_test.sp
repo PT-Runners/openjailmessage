@@ -34,13 +34,15 @@ public Action Cmd_StatusCells(int client, int args)
     {
         CPrintToChat(client, "{darkred}> {default}As celas ainda não estão abertas.");
     }
+
+    return Plugin_Handled;
 }
 
-/*public Action OJM_OnJailOpened(int client)
+public Action OJM_OnJailOpened(int client)
 {
-    PrintToChatAll("OJM_OnJailOpened: %N", client);
+    //PrintToChatAll("OJM_OnJailOpened: %N", client);
     return Plugin_Continue;
-}*/
+}
 
 stock bool IsValidClient(int client) 
 { 
