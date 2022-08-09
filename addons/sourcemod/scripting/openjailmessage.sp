@@ -7,6 +7,7 @@
 #include <smartjaildoors>
 #include <openjailmessage>
 #include <emitsoundany>
+#include <warden>
 
 #define MAX_BUTTONS 5
 #define MAX_SOUNDS 10
@@ -20,6 +21,7 @@ enum struct Entities
 
 Entities g_ButtonEntities[MAX_BUTTONS];
 int g_iButtonEntitiesSize = 0;
+int g_iFreedayTime;
 
 bool g_bJailAlreadyOpen;
 
@@ -39,6 +41,7 @@ Sound g_Sounds[MAX_SOUNDS];
 int g_iSoundsSize = 0;
 
 Handle g_hOnOpen  = null;
+Handle g_hTimerFreeday;
 
 public Plugin myinfo =
 {
@@ -66,6 +69,7 @@ public void OnPluginStart()
 	HookEntityOutput("func_button", "OnPressed", Button_Pressed);
 
 	HookEvent("round_prestart", OnRoundPreStart);
+	HookEvent("round_end", OnRoundEnd);
 
 	LoadTranslations("openjailmessage.phrases");
 
@@ -73,6 +77,11 @@ public void OnPluginStart()
 
 	g_bJailAlreadyOpen = false;
 	g_iClientOpened = -1;
+}
+
+public void OnConfigsExecuted()
+{
+	g_iFreedayTime = 60 + GetConVarInt(FindConVar("mp_freezetime"));
 }
 
 public void OnMapStart()
@@ -84,12 +93,80 @@ public void OnMapStart()
 	ReadConfig();
 }
 
+public void OnMapEnd()
+{
+	g_hTimerFreeday = null;
+}
+
+public void OnClientPutInServer(int client)
+{
+    SDKHook(client, SDKHook_OnTakeDamage, Hook_OnTakeDamage);
+}
+
+public Action Hook_OnTakeDamage(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
+{
+	if (g_bJailAlreadyOpen)
+		return Plugin_Continue;
+
+	if (!IsValidClient(victim) || !IsValidClient(attacker))
+		return Plugin_Continue;
+
+	if (GetClientTeam(attacker) == CS_TEAM_CT && GetClientTeam(victim) == CS_TEAM_T && damage > 0)
+	{
+		SJD_OpenDoors();
+		CPrintToChatAll("%t", "Attacked Closed Cells", attacker);
+
+		if(!g_iSoundsSize)
+			return Plugin_Continue;
+
+		char randomSound[PLATFORM_MAX_PATH];
+		GetRandomSound(randomSound, sizeof(randomSound), CS_TEAM_T);
+		EmitSoundToAllAny(randomSound, _, SNDCHAN_VOICE);
+		g_bJailAlreadyOpen = true;
+		return Plugin_Continue;
+	}
+
+	return Plugin_Continue;
+}
+
+public Action Timer_Freeday(Handle timer)
+{
+	if (g_bJailAlreadyOpen)
+		return Plugin_Stop;
+
+	g_iFreedayTime--;
+	if (g_iFreedayTime > 0)
+	{
+		if (g_iFreedayTime <= 5)
+		{
+			CPrintToChatAll("%t", "Freeday in", g_iFreedayTime);
+
+			return Plugin_Continue;
+		}
+
+		return Plugin_Continue;
+	}
+
+	CPrintToChatAll("%t", "Freeday not open");
+	SJD_OpenDoors();
+	char randomSound[PLATFORM_MAX_PATH];
+	GetRandomSound(randomSound, sizeof(randomSound), CS_TEAM_T);
+	EmitSoundToAllAny(randomSound, _, SNDCHAN_VOICE);
+	g_bJailAlreadyOpen = true;
+
+	g_hTimerFreeday = null;
+
+	return Plugin_Stop;
+}
+
 public void OnRoundPreStart(Handle event, const char[] name, bool dontBroadcast)
 {
 	g_iClientOpened = -1;
 	if (GameRules_GetProp("m_bWarmupPeriod") == 0)
 	{
 		g_bJailAlreadyOpen = false;
+		g_iFreedayTime = g_iFreedayTime = 60 + GetConVarInt(FindConVar("mp_freezetime"));
+		g_hTimerFreeday = CreateTimer(1.0, Timer_Freeday, _, TIMER_REPEAT);
 	}
 	else
 	{
@@ -97,8 +174,14 @@ public void OnRoundPreStart(Handle event, const char[] name, bool dontBroadcast)
 	}
 }
 
+public void OnRoundEnd(Event event, char[] name, bool dontBroadcast)
+{
+	delete g_hTimerFreeday;
+}
+
 public void MyJailbreak_OnEventDayStart(char[] EventDayName)
 {
+	delete g_hTimerFreeday;
 	g_bJailAlreadyOpen = true;
 	g_iClientOpened = -1;
 }
@@ -298,7 +381,14 @@ void ShowMessageToClients(activator)
 
 		case CS_TEAM_CT:
 		{
-			CPrintToChatAll("%t", "Guard opened cells", activator);
+			if (!warden_exist())
+			{
+				CPrintToChatAll("%t", "No warden opened cells", activator);
+			}
+			else
+			{
+				CPrintToChatAll("%t", "Guard opened cells", activator);
+			}
 		}
 	}
 
@@ -306,7 +396,15 @@ void ShowMessageToClients(activator)
 		return;
 
 	char randomSound[PLATFORM_MAX_PATH];
-	GetRandomSound(randomSound, sizeof(randomSound), team);
+	if (!warden_exist())
+	{
+		GetRandomSound(randomSound, sizeof(randomSound), CS_TEAM_T);
+	}
+	else
+	{
+		GetRandomSound(randomSound, sizeof(randomSound), team);
+	}
+
 	EmitSoundToAllAny(randomSound, _, SNDCHAN_VOICE);
 }
 

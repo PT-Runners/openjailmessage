@@ -3,12 +3,35 @@
     "Prisoner opened cells"
     {
         "#format"	"{1:N}"
-		"en"		"> {default}O prisioneiro {darkred}{1} {default}abriu as celas. É {orange}FreeDay{default}."
+		"en"		"> {default}O prisioneiro {darkred}{1} {default}abriu as celas. É {darkred}FreeDay{default}."
     }
 
     "Guard opened cells"
     {
         "#format"	"{1:N}"
 		"en"		"> {default}O guarda {darkblue}{1} {default}abriu as celas."
+    }
+
+    "Attacked Closed Cells"
+    {
+        "#format"	"{1:N}"
+		"en"		"> {default}O guarda {darkblue}{1} {default}atacou de celas fechadas. É {darkred}FreeDay{default}."
+    }
+
+    "No warden opened cells"
+    {
+        "#format"	"{1:N}"
+		"en"		"> {default}O guarda {darkblue}{1} {default}abriu as celas {darkred}sem Warden{default}. É {darkred}FreeDay{default}."
+    }
+
+    "Freeday in"
+    {
+        "#format"	"{1:i}"
+		"en"		"> {default}Será {darkred}Freeday{default} se as celas não forem abertas em {darkblue}{1} {default}segundos."
+    }
+
+    "Freeday not open"
+    {
+		"en"		"> {default}As celas {darkred}não{default} foram abertas a tempo. É {darkred}Freeday{default}."
     }
 }
