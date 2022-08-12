@@ -95,7 +95,7 @@ public void OnMapStart()
 
 public void OnMapEnd()
 {
-	g_hTimerFreeday = null;
+	delete g_hTimerFreeday;
 }
 
 public void OnClientPutInServer(int client)
@@ -132,7 +132,10 @@ public Action Hook_OnTakeDamage(int victim, int &attacker, int &inflictor, float
 public Action Timer_Freeday(Handle timer)
 {
 	if (g_bJailAlreadyOpen)
+	{
+		g_hTimerFreeday = null;
 		return Plugin_Stop;
+	}
 
 	g_iFreedayTime--;
 	if (g_iFreedayTime > 0)
