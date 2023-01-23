@@ -185,8 +185,12 @@ public void OnRoundEnd(Event event, char[] name, bool dontBroadcast)
 public void MyJailbreak_OnEventDayStart(char[] EventDayName)
 {
 	delete g_hTimerFreeday;
-	g_bJailAlreadyOpen = true;
 	g_iClientOpened = -1;
+
+	if (!StrEqual(EventDayName, "nazi day", false))
+	{
+		g_bJailAlreadyOpen = true;
+	}
 }
 
 public void Button_Pressed(const char[] output, int caller, int activator, float delay)
