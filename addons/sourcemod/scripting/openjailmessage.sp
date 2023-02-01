@@ -24,6 +24,7 @@ int g_iButtonEntitiesSize = 0;
 int g_iFreedayTime;
 
 bool g_bJailAlreadyOpen;
+bool g_bIsForcedFreeday;
 
 int g_iClientOpened = -1;
 
@@ -54,14 +55,15 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-    g_hOnOpen = CreateGlobalForward("OJM_OnJailOpened", ET_Event, Param_Cell, Param_Array);
+	g_hOnOpen = CreateGlobalForward("OJM_OnJailOpened", ET_Event, Param_Cell, Param_Array);
     
-    CreateNative("OJM_IsJailAlreadyOpen", Native_IsJailAlreadyOpen);
-    CreateNative("OJM_GetClientJailOpen", Native_GetClientJailOpen);
+	CreateNative("OJM_IsJailAlreadyOpen", Native_IsJailAlreadyOpen);
+	CreateNative("OJM_GetClientJailOpen", Native_GetClientJailOpen);
+	CreateNative("OJM_IsForcedFreeday", Native_IsForcedFreeday);
     
-    RegPluginLibrary("openjailmessage");
+	RegPluginLibrary("openjailmessage");
     
-    return APLRes_Success;
+	return APLRes_Success;
 }
 
 public void OnPluginStart()
@@ -76,6 +78,7 @@ public void OnPluginStart()
 	BuildPath(Path_SM, g_sFilePath, sizeof(g_sFilePath), "logs/openjailmessage.txt");
 
 	g_bJailAlreadyOpen = false;
+	g_bIsForcedFreeday = false;
 	g_iClientOpened = -1;
 }
 
@@ -115,6 +118,7 @@ public Action Hook_OnTakeDamage(int victim, int &attacker, int &inflictor, float
 	{
 		SJD_OpenDoors();
 		CPrintToChatAll("%t", "Attacked Closed Cells", attacker);
+		g_bIsForcedFreeday = true;
 
 		if(!g_iSoundsSize)
 			return Plugin_Continue;
@@ -152,6 +156,8 @@ public Action Timer_Freeday(Handle timer)
 
 	CPrintToChatAll("%t", "Freeday not open");
 	SJD_OpenDoors();
+	g_bIsForcedFreeday = true;
+
 	char randomSound[PLATFORM_MAX_PATH];
 	GetRandomSound(randomSound, sizeof(randomSound), CS_TEAM_T);
 	EmitSoundToAllAny(randomSound, _, SNDCHAN_VOICE);
@@ -168,6 +174,7 @@ public void OnRoundPreStart(Handle event, const char[] name, bool dontBroadcast)
 	if (GameRules_GetProp("m_bWarmupPeriod") == 0)
 	{
 		g_bJailAlreadyOpen = false;
+		g_bIsForcedFreeday = false;
 		g_iFreedayTime = g_iFreedayTime = 60 + GetConVarInt(FindConVar("mp_freezetime"));
 		g_hTimerFreeday = CreateTimer(1.0, Timer_Freeday, _, TIMER_REPEAT);
 	}
@@ -260,6 +267,11 @@ public int Native_IsJailAlreadyOpen(Handle plugin, int numParams)
 public int Native_GetClientJailOpen(Handle plugin, int numParams)
 {
     return g_iClientOpened;
+}
+
+public int Native_IsForcedFreeday(Handle plugin, int numParams)
+{
+	return view_as<int>(g_bIsForcedFreeday);
 }
 
 void ReadSounds() {
@@ -380,6 +392,7 @@ void ShowMessageToClients(activator)
 		case CS_TEAM_T:
 		{
 			CPrintToChatAll("%t", "Prisoner opened cells", activator);
+			g_bIsForcedFreeday = true;
 		}
 
 		case CS_TEAM_CT:
@@ -387,6 +400,7 @@ void ShowMessageToClients(activator)
 			if (!warden_exist())
 			{
 				CPrintToChatAll("%t", "No warden opened cells", activator);
+				g_bIsForcedFreeday = true;
 			}
 			else
 			{

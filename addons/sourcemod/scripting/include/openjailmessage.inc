@@ -4,6 +4,7 @@
 #define _openjailmessage_included
 
 native bool OJM_IsJailAlreadyOpen();
+native bool OJM_IsForcedFreeday();
 native int OJM_GetClientJailOpen();
 
 forward Action OJM_OnJailOpened(int client);
@@ -24,6 +25,7 @@ public SharedPlugin __pl_discord =
 public __pl_discord_SetNTVOptional()
 {
 	MarkNativeAsOptional("OJM_IsJailAlreadyOpen");
+	MarkNativeAsOptional("OJM_IsForcedFreeday");
 	MarkNativeAsOptional("OJM_GetClientJailOpen");
 }
 #endif
